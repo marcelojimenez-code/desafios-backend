@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <div class="container">
+        <div class="row align-items-center p-3">
+            <div class="col">
+                <h1 class="text-success">Lista de productos</h1>
+            </div>
+        </div>
+    </div>
+    {{#if products}}
+    <div class="row">
+        {{#each products}}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{thumbnail}}" class="card-img-top" alt="{{title}} thumbnail">
+                <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                    <p class="card-text">{{description}}</p>
+                    <p class="card-text">${{price}}</p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="col">
+        <a href="/realTimeProducts" target="_blank" class="btn btn-success">
+            Agregar nuevo producto
+        </a>
+    </div>
+    {{else}}
+    <p>No se encontraron productos</p>
+    {{/if}}
+</div>

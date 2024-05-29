@@ -1,0 +1,12 @@
+{
+  "name": "backend-desafio2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node --watch src/ProductManager.js"
+  },
+  "keywords": [],
+  "author": "Marcelo Jimenez C",
+  "license": "ISC"
+}

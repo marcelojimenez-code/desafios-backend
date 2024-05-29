@@ -1,0 +1,21 @@
+{
+  "name": "backend-desafio4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marcelo Jimenez C",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.5.2",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "socket.io": "^4.7.5",
+    "sweetalert2": "^11.10.8"
+  }
+
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": 2,
+    "title": "Titulo actualizado",
+    "description": "Este es un Producto de Prueba2",
+    "price": 500,
+    "thumbnail": "Sin Imagen",
+    "code": "abc124",
+    "stock": 50
+  },
+  {
+    "id": 3,
+    "title": "Producto Prueba1",
+    "description": "Este es un Producto de Prueba3",
+    "price": 400,
+    "thumbnail": "Sin Imagen",
+    "code": "abc125",
+    "stock": 45
+  },
+  {
+    "id": 4,
+    "title": "Producto Prueba2",
+    "description": "Este es un Producto de Prueba4",
+    "price": 500,
+    "thumbnail": "Sin Imagen",
+    "code": "abc126",
+    "stock": 55
+  }
+]

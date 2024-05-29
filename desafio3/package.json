@@ -1,0 +1,17 @@
+{
+  "name": "backend-desafio3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node .",
+    "start": "node . --watch"
+  },
+  "keywords": [],
+  "author": "Marcelo Jimenez C",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,58 @@
+<div class="container">
+    <h1 class="mt-5 mb-4 text-center text-light">Real Time Products</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-primary">Nombre</th>
+                        <th class="text-primary">Descripción del producto</th>
+                        <th class="text-primary">Precio</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="productList" class="text-light">
+                    {{#each products}}
+                    <tr>
+                        <td>{{this.id}}</td>
+                        <td>{{this.title}}</td>
+                        <td>{{this.description}}</td>
+                        <td>{{this.price}}</td>
+                        <td><button onclick="confirmDelete('{{this.id}}')" class="btn btn-danger">Eliminar</button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-body shadow p-3 mb-5 bg-white rounded">
+                    <h2 class="mb-4 text-success text-center">Añadir nuevo producto</h2>
+                    <form id="addProductForm" class="text-center">
+                        <div class="mb-3">
+                            <input type="text" id="title" class="form-control" placeholder="Nombre del Producto"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="description" class="form-control"
+                                placeholder="Descripción del producto" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" id="price" class="form-control" placeholder="Precio del producto" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="thumbnail" class="form-control"
+                                placeholder="URL de la imagen (thumbnail)" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Añadir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>

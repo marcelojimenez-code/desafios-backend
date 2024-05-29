@@ -1,0 +1,6 @@
+[
+    {"id":1,"title":"producto prueba 1","description":"Este es un producto prueba 1","price":300,"thumbnail":"Sin imagen","code":"abc1234","stock":30},
+    {"id":2,"title":"producto prueba 2","description":"Este es un producto prueba 2","price":300,"thumbnail":"Sin imagen","code":"abc4567","stock":80},
+    {"id":3,"title":"producto prueba 3","description":"Este es un producto prueba 3","price":500,"thumbnail":"Sin imagen","code":"abc7890","stock":50},
+    {"id":4,"title":"producto prueba 4","description":"Este es un producto prueba 4","price":600,"thumbnail":"Sin imagen","code":"abc1593","stock":90}
+]
