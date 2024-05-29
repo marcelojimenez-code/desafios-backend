@@ -1,6 +1,8 @@
-Entrega Desafios Backend
+**Entrega Desafios Backend**
 
+```python
 Repositorio nuevo que contiene todas las carpetas de los desafios del curso Backend de Coderhouse
+```
 
 Desafio 1 : Clases ECMAScript y ECMAScript avanzado
 
