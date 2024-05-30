@@ -10,7 +10,7 @@
             {{/if}}
 
 
-            <form id="productForm" action="/users/register" method="POST">
+            <form id="productForm" action="/api/sessions/register" method="POST">
               <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="name" name="name">
@@ -25,10 +25,18 @@
               </div>
               <div class="mb-3">
                     <label class="form-label" for="password">Password:</label>
-                    <input class="form-control" type="password" id="password" name="password"><br><br>
+                    <input class="form-control" type="password" id="password" name="password">
               </div>
-              <button type="submit" class="btn btn-primary">Agregar Producto</button>
+              <div class="mb-3">
+                    <label class="form-label" for="age">Edad:</label>
+                    <input class="form-control" type="text" id="age" name="age"><br><br>
+              </div>
+              <button type="submit" class="btn btn-primary">Crear Usuario</button>
             </form>
+
+            <br>
+
+            <a class="btn btn-success" href="/login">Iniciar sesión</a>
           </div>
         </div>
       </div>

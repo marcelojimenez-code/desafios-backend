@@ -12,7 +12,7 @@
             </div>
             {{/if}}
 
-            <form id="loginForm" action="/users/login" method="POST">
+            <form id="loginForm" action="/api/sessions/login" method="POST">
               <div class="mb-3">
                 <label for="email" class="form-label">Correo Electrónico</label>
                 <input type="email" class="form-control" id="email" name="email" />
@@ -29,6 +29,8 @@
               </div>
               <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </form>
+            <br>
+            <a class="btn btn-warning" href="/register">Registrarse</a>
           </div>
         </div>
       </div>
