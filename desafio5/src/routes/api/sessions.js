@@ -1,26 +1,33 @@
 import { Router } from 'express';
-import User from '../../models/user.model.js';
+import userModel from '../../models/user.model.js';
 
 const router = Router();
 
 router.post('/register', async (req, res) => {
     const { name, lastname, email, password, age } = req.body;
     try {
-        const newUser = new User({ name, lastname, email, password, age });
+        const newUser = new userModel({ name, lastname, email, password, age });
         await newUser.save();
-        res.redirect('/login');
+        console.log("usuario registrado")
+        res.redirect('/users/login');
     } catch (err) {
         res.status(500).send('Error al registrar usuario');
     }
 });
 
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    console.log(email, password)
+    const login = req.body;
+    console.log(login.email, login.password)
     try {
-        const user = await User.findOne({ email });
+        const user = await userModel.findOne({ email: login.email , password: login.password });
         console.log(user)
-        if (!user) return res.status(404).send('Usuario no encontrado');
+
+        if (!user){
+            //res.redirect('/users/login',{message:"Error al intentar iniciar sesión"} );
+            //return res.status(200).send('Usuario no encontrado');
+            return res.render('users/login',{message:"Credenciales inválidas"})
+        } 
+        
         req.session.user = {
             id: user._id,
             name: user.name,
@@ -28,19 +35,27 @@ router.post('/login', async (req, res) => {
             email: user.email,
             password: user.password,
             age: user.age,
+            role: user.role,
         };
         console.log(req.session.user)
-        res.redirect('/profile');
+
+        if( user.role === 'admin' ){
+            return res.render('users/listado',{message:"Perfil Administrador"})
+        }
+        else{
+            return res.render('users/profile',{message:"Bienvenido "})
+        }
 
     } catch (err) {
-        res.status(500).send('Error al iniciar sesión');
+        //res.status(500).send('Error al iniciar sesión');
+        res.redirect('/users/login');
     }
 });
 
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) return res.status(500).send('Error al cerrar sesión');
-        res.redirect('/login');
+        res.redirect('/users/login');
     });
 });
 

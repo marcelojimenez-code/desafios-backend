@@ -2,7 +2,7 @@ export const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
         return next();
     } else {
-        res.redirect('/login');
+        res.redirect('/users/login');
     }
 };
 
@@ -10,6 +10,6 @@ export const isNotAuthenticated = (req, res, next) => {
     if (!req.session.user) {
         return next();
     } else {
-        res.redirect('/profile');
+        res.redirect('/users/profile');
     }
 };

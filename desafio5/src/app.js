@@ -17,8 +17,9 @@ import FileStore from 'session-file-store'
 
 import session from 'express-session';
 import bodyParser from 'body-parser';
-import { engine } from 'express-handlebars';
-import mongoose from './config/database.js';
+
+import mongoose from 'mongoose'
+//import mongoose from './config/database.js';
 import MongoStore from 'connect-mongo';
 import sessionsRouter from './routes/api/sessions.js';
 import viewsRouter from './routes/views.js';
@@ -29,6 +30,10 @@ dotenv.config()
 /**
  * 
  */
+
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => { console.log("Conectado a la base de datos") })
+    .catch(error => console.error("Error en la conexion", error))
 
 const FileStoreInstance = FileStore(session)
 

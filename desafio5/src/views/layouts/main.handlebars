@@ -48,8 +48,13 @@
         </li>
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/users/login"><i class="fas fa-user"></i> Usuario</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user"></i> Usuario</a>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/api/sessions/logout">Cerrar Sesion</a>
+          </div>
         </li>
       </ul>
 
