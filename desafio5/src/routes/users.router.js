@@ -91,23 +91,6 @@ router.post("/login", async (req, res) => {
       const users = await userModel.find().lean().exec();
       console.log(users);
 
-      req.session.user = {
-        id: validar._id,
-        name: validar.name,
-        lastname: validar.lastname,
-        email: validar.email,
-        password: validar.password,
-        age: validar.age,
-        role: validar.role,
-      };
-
-       
-      if(validar.role === 'admin'){
-        return res.render("users/listado",{message: "Bienvenido Admin "},users)
-      }else{
-        return res.render("users/profile",{message: "Bienvenido Usuario"})
-      }
-
       return res.render("users/listado", {
         title: "Iniciar Sesion",
         users,
