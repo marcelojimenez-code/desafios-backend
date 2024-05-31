@@ -10,7 +10,6 @@ import messageRouter from './routes/message.router.js'
 
 import { Server } from 'socket.io'
 import dotenv from 'dotenv'
-import messagesModel from './models/message.model.js'
 
 import cookieParser from 'cookie-parser'
 import FileStore from 'session-file-store'

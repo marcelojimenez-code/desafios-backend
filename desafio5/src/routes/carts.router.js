@@ -7,8 +7,6 @@ router.get('/', async (req, res) => {
 
     try {
         const carts = await cartModel.find().lean().exec()
-
-
         res.status(200).json({
             status:true,
             message:'Lista de carritos',
@@ -31,7 +29,6 @@ router.post('/', async ( req, res ) => {
         res.status(500).json([{ message: error }]);
     }
     
-        
 })
 
 /* GET /:cid */

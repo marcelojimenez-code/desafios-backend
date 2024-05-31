@@ -3,6 +3,10 @@ import userModel from '../../models/user.model.js';
 
 const router = Router();
 
+router.get('/', async (req, res) => {
+    res.redirect('/login');
+});
+
 router.post('/register', async (req, res) => {
     const { name, lastname, email, password, age } = req.body;
     try {
@@ -17,7 +21,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/failregister', async (req, res) => {
     console.log("Estrategia fallida")
-    res.send({ error: "Falló" })
+    res.status(200).send('Error al registrar usuario');
 })
 
 router.post('/login', async (req, res) => {
@@ -44,7 +48,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/faillogin', (req, res) => {
-    res.send({ error: "Login fallido" })
+    res.status(200).send({ error: "Login fallido" });
 })
 
 router.post('/logout', (req, res) => {

@@ -23,5 +23,8 @@ router.get('/admin', isAuthenticated, (req, res) => {
     res.render('admin', { user: req.session.user});
 });
 
+router.get('/productos', authMiddleware.isLoggedIn, (req, res) => {
+    res.render('productos', { user: req.session.user });
+});
 
 export default router;
