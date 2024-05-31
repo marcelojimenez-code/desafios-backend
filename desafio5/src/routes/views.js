@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { isAuthenticated, isNotAuthenticated } from '../middleware/auth.js';
+import { isAuthenticated, isNotAuthenticated, isLoggedIn } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -19,11 +19,7 @@ router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profile', { user: req.session.user});
 });
 
-router.get('/admin', isAuthenticated, (req, res) => {
-    res.render('admin', { user: req.session.user});
-});
-
-router.get('/productos', authMiddleware.isLoggedIn, (req, res) => {
+router.get('/admin', isLoggedIn, (req, res) => {
     res.render('productos', { user: req.session.user });
 });
 
