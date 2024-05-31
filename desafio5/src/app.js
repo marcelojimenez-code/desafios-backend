@@ -47,21 +47,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 /**
- * CODIGO SESSIONES
- */
-app.use(session({
-    secret: 'secretkey',
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://marcelo:marcelo123456@cluster0.rx8t5f1.mongodb.net/ecommerce' }),
-                                secret: 'keyboard',
-                                resave: false,
-                                saveUninitialized: false
-    }));
-
-
-/**
- * CODIGO COOKIES
+ * CODIGO COOKIES Y CREA SESIONES
  */
     app.use(cookieParser())
     app.use(session({
@@ -108,12 +94,12 @@ app.use(express.static('./src/public'))
  * RUTAS DEL SISTEMA
  */
 app.use('/api/sessions', sessionsRouter);
-
 app.use('/', viewsRouter)
+/*
 app.use('/users', userRouter)
 app.use('/chat', messageRouter)
 app.use('/products', productRouter)
-
+*/
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/carts', cartsRouter)
