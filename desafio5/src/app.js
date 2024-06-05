@@ -94,11 +94,7 @@ app.use(express.static('./src/public'))
  */
 app.use('/api/sessions', sessionsRouter);
 app.use('/', viewsRouter)
-/*
-app.use('/users', userRouter)
-app.use('/chat', messageRouter)
-app.use('/products', productRouter)
-*/
+
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/carts', cartsRouter)

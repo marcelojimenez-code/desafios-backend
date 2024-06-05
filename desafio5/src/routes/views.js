@@ -19,7 +19,7 @@ router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profile', { user: req.session.user});
 });
 
-router.get('/admin', isLoggedIn, (req, res) => {
+router.post('/admin', isLoggedIn, (req, res) => {
     res.render('productos', { user: req.session.user });
 });
 

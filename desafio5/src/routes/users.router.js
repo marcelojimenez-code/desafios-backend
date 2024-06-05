@@ -4,116 +4,68 @@ import cartModel from "../models/carts.model.js";
 
 const router = Router();
 
-/**
- *  GET
- */
-
-//RUTAS PARA EL INGRESO
-router.get("/crear", (req, res) => {
-  res.render("users/crear", { title: "crear usuario" });
-});
-
-router.get("/register", (req, res) => {
-  res.render("users/register", { title: "registrar usuario" });
-});
-
-router.get("/login", (req, res) => {
-  res.render("users/login", { title: "Iniciar Sesion" });
-});
-
-router.get("/editar/:id", async (req, res) => {
-  const user = await userModel.findById(req.params.id).lean().exec();
-  res.render("users/editar", { title: "editar usuario", user });
-});
-
-router.get("/profile", async (req, res) => {
-  const user = req.session.user
-  console.log(user)
-  return res.render("users/profile", { message: "Bienvenido ",user});
-});
-
-router.get('/listado', async(req,res)=>{
-  return res.render('listado',{message:"Perfil Administrador"})
-})
-
-/**
- *  POST
- */
-
-router.post("/register", async (req, res) => {
-  const usuario = req.body;
-  const findUser = await userModel.findOne({ email: usuario.email });
-
-  if (findUser) {
-    return res.render("users/register", { message: "el usuario ya existe" });
-  }
-
-  const cart = await cartModel.create({});
-  usuario.cart = cart._id;
-  const newUser = await userModel.create(usuario);
-  return res.render("users/listado", {
-    title: "Iniciar Sesion",
-    newUser,
-    message: "el usuario creado",
-  });
-});
-
-router.post("/editar/:id", async (req, res) => {
-  let { id } = req.params;
-  let userToReplace = req.body;
-
-  if (!userToReplace.password) {
-    return res.render("users/editar", {
-      title: "editar usuario",
-      message: "No se puede grabar sin password",
-    });
-  }
-  let result = await userModel.updateOne({ _id: id }, userToReplace);
-  return res.render("users/listado", {
-    title: "Iniciar Sesion",
-    userToReplace,
-    message: "Usuario Actualizado",
-    result,
-  });
-});
-
-// Ruta para iniciar sesión
-router.post("/login", async (req, res) => {
-  const login = req.body;
-
+// GET - Obtener todos los usuarios
+router.get('/', async (req, res) => {
   try {
-    const validar = await userModel.findOne({
-      email: login.email,
-      password: login.password,
-    });
-
-    if (validar) {
-      const users = await userModel.find().lean().exec();
-      console.log(users);
-
-      return res.render("users/listado", {
-        title: "Iniciar Sesion",
-        users,
-        payload: validar,
-      });
-    } else {
-      return res.render("users/login", { message: "Credenciales inválidas" });
-    }
+      const users = await userModel.find();
+      res.json(users);
   } catch (error) {
-    return res.render("users/login", {
-      message: "Error al intentar iniciar sesión",
-    });
+      res.status(500).json({ error: 'Error al obtener usuarios' });
   }
 });
 
-/**
- *  PUT 
- */
+// GET - Obtener un usuario por su ID
+router.get('/:id', async (req, res) => {
+  try {
+      const user = await userModel.findById(req.params.id).lean().exec();
+      if (user) {
+          res.json(user);
+      } else {
+          res.status(404).json({ message: 'Usuario no encontrado' });
+      }
+  } catch (error) {
+      res.status(500).json({ error: 'Error al obtener usuario' });
+  }
+});
 
+// POST - Crear un nuevo usuario
+router.post('/', async (req, res) => {
+  try {
+      const usuario = req.body;
+      const findUser = await userModel.findOne({ email: usuario.email, password: usuario.password }).lean().exec();
+    
+      if (findUser) {
+        return res.render("users/register", { message: "el usuario ya existe" });
+      }
+    
+      const cart = await cartModel.create({});
+      usuario.cart = cart._id;
+      const newUser = await userModel.create(usuario);
 
-/**
- *  DELETE
- */
+      res.status(201).json(newUser);
+  } catch (error) {
+      res.status(400).json({ error: 'Error al crear usuario' });
+  }
+});
 
+// PUT - Actualizar un usuario existente
+router.put('/:id', async (req, res) => {
+  try {
+      await userModel.findByIdAndUpdate(req.params.id, req.body);
+      res.json({ message: 'Usuario actualizado correctamente' });
+  } catch (error) {
+      res.status(400).json({ error: 'Error al actualizar usuario' });
+  }
+});
+
+// DELETE - Eliminar un usuario por su ID
+router.delete('/:id', async (req, res) => {
+  try {
+      await userModel.findByIdAndDelete(req.params.id);
+      res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (error) {
+      res.status(400).json({ error: 'Error al eliminar usuario' });
+  }
+});
 
 export default router;

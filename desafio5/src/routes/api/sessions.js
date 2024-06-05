@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import userModel from '../../models/user.model.js';
+import { isLoggedIn } from '../../middleware/auth.js';
 
 const router = Router();
 
@@ -19,11 +20,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/failregister', async (req, res) => {
-    console.log("Estrategia fallida")
-    res.status(200).send('Error al registrar usuario');
-})
-
 router.post('/login', async (req, res) => {
     const login = req.body;
     console.log(login.email, login.password)
@@ -39,17 +35,15 @@ router.post('/login', async (req, res) => {
                 email: user.email,
                 age: user.age,
             };
+            res.cookie('userData', { username: user.username, role: user.role }, { maxAge: 3600000 }); 
             console.log(req.session.user)
+            
             res.redirect('/profile');
 
     } catch (err) {
         res.status(500).send('Error al iniciar sesión');
     }
 });
-
-router.get('/faillogin', (req, res) => {
-    res.status(200).send({ error: "Login fallido" });
-})
 
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
