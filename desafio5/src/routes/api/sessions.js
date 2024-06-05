@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import userModel from '../../models/user.model.js';
-import { isLoggedIn } from '../../middleware/auth.js';
 
 const router = Router();
 
@@ -11,9 +10,8 @@ router.get('/', async (req, res) => {
 router.post('/register', async (req, res) => {
     const { name, lastname, email, password, age } = req.body;
     try {
-        const newUser = new userModel({ name, lastname, email, password, age });
-        await newUser.save();
-        console.log("usuario registrado")
+        const newUser = await userModel.create({ name, lastname, email, password, age });
+        console.log(newUser)
         res.redirect('/login');
     } catch (err) {
         res.status(500).send('Error al registrar usuario');
@@ -30,26 +28,31 @@ router.post('/login', async (req, res) => {
         if (!user) return res.status(404).send('Usuario no encontrado');
             req.session.user = {
                 id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
+                name: user.name,
+                lastname: user.lastname,
                 email: user.email,
                 age: user.age,
+                role: user.role
             };
-            res.cookie('userData', { username: user.username, role: user.role }, { maxAge: 3600000 }); 
+            res.cookie('userData', { username: user.name, role: user.role, id: user._id }, { maxAge: 3600000 }); 
             console.log(req.session.user)
 
-            res.redirect('/');
+            if (req.session.user.role === 'admin'){
+                return res.redirect('/listado');
+            }else {
+                // redirigir al profile
+                return res.redirect('/profile');
+            }
 
     } catch (err) {
         res.status(500).send('Error al iniciar sesión');
     }
 });
 
-router.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) return res.status(500).send('Error al cerrar sesión');
-        res.redirect('/login');
-    });
+router.get('/logout', (req, res) => {
+    return res.clearCookie('userData').redirect('/login')
+  
+
 });
 
 export default router;

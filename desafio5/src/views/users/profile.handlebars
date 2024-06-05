@@ -9,13 +9,14 @@
                 {{/if}}
 
                 <div class="card-body">
-                    <p class="card-text">Nombre: <span id="first_name">{{user.first_name}}</span></p>
-                    <p class="card-text">Apellido: <span id="last_name">{{user.last_name}}</span></p>
+                    <p class="card-text">Nombre: <span id="first_name">{{user.name}}</span></p>
+                    <p class="card-text">Apellido: <span id="last_name">{{user.lastname}}</span></p>
                     <p class="card-text">Email: <span id="email">{{user.email}}</span></p>
                     <p class="card-text">Edad: <span id="age">{{user.age}}</span></p>
+                    <p class="card-text">Edad: <span id="age">{{user.role}}</span></p>
                 </div>
 
-                <form id="productForm" action="/api/sessions/logout" method="POST">
+                <form id="productForm" action="/logout" method="GET">
                     <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
                 </form>
 

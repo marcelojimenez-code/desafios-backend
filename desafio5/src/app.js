@@ -22,6 +22,7 @@ import mongoose from 'mongoose'
 import MongoStore from 'connect-mongo';
 import sessionsRouter from './routes/api/sessions.js';
 import viewsRouter from './routes/views.js';
+import path from 'path';
 // import viewsRouter from './routes/views.router.js'
 
 dotenv.config()
@@ -34,7 +35,7 @@ mongoose.connect(process.env.MONGO_URL)
     .then(() => { console.log("Conectado a la base de datos") })
     .catch(error => console.error("Error en la conexion", error))
 
-const FileStoreInstance = FileStore(session)
+//const FileStoreInstance = FileStore(session)
 
 /* Nombramos la variable app con la función de express */
 const app = express();
@@ -60,18 +61,6 @@ app.use(express.urlencoded({ extended: true }))
         saveUninitialized: false,
     }))
 
-    app.get('/', (req, res) => {
-        if (req.session.views) {
-            req.session.views++;
-            res.send(`<p>Visitas: ${req.session.views}</p>`);
-        } else {
-            req.session.views = 1;
-            res.send('Bienvenido a la página por primera vez! Actualiza para contar las visitas.');
-        }
-        console.log('Sesión:', req.session);
-    });
-
-
 
 /**
  * Definimos el puerto 
@@ -85,7 +74,7 @@ const httpServer = app.listen(PORT, console.log(`Server running on port ${PORT}`
  * HANDLEBARS
  */
 app.engine('handlebars', handlebars.engine())
-app.set('views', __dirname + '/views')
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars')
 app.use(express.static('./src/public'))
 
