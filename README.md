@@ -11,6 +11,8 @@ Desafio 3 : Servidor con Express
 
 Desafio 4 : Websockets + Handlebars
 
-Desafio 5 : Implementación de login ( aun no iniciado )
+Desafio 5 : Implementación de login 
+
+Desafio 6 : 
 ```
 
