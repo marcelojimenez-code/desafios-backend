@@ -100,6 +100,11 @@ app.use('/api/products', productRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messageRouter)
 
+// Manejador de rutas no encontradas
+app.use((req, res, next) => {
+    res.status(404).send("Página no encontrada");
+});
+
 /**
  * CONEXION DE SOCKETS
  */

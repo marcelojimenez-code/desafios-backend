@@ -24,7 +24,7 @@ router.post('/login', async (req, res) => {
     const login = req.body;
     console.log(login.email, login.password)
     try {
-        const user = await userModel.findOne({ email: login.email , password: login.password });
+        const user = await userModel.findOne({ email: login.email , password: login.password }).exec();
         console.log(user)
 
         if (!user) return res.status(404).send('Usuario no encontrado');
@@ -37,8 +37,8 @@ router.post('/login', async (req, res) => {
             };
             res.cookie('userData', { username: user.username, role: user.role }, { maxAge: 3600000 }); 
             console.log(req.session.user)
-            
-            res.redirect('/profile');
+
+            res.redirect('/');
 
     } catch (err) {
         res.status(500).send('Error al iniciar sesión');
