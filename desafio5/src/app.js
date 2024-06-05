@@ -100,7 +100,6 @@ app.use('/api/products', productRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messageRouter)
 
-
 /**
  * CONEXION DE SOCKETS
  */
