@@ -11,8 +11,33 @@ router.post('/register', async (req, res) => {
     const { name, lastname, email, password, age } = req.body;
     try {
         const newUser = await userModel.create({ name, lastname, email, password, age });
-        console.log(newUser)
         res.redirect('/login');
+    } catch (err) {
+        res.status(500).send('Error al registrar usuario');
+    }
+});
+
+router.post('/edit/:id', async (req, res) => {
+    
+    try {
+        const userId = req.params.id;
+        const updatedUserData = req.body;
+
+        const newUser = await userModel.findByIdAndUpdate(userId, updatedUserData);
+        res.redirect('/listado');
+    } catch (err) {
+        res.status(500).send('Error al registrar usuario');
+    }
+});
+
+router.get('/eliminar/:id', async (req, res) => {
+
+    try {
+        const userId = req.params.id;
+        console.log(userId)
+        const newUser = await userModel.findByIdAndDelete(userId);
+        console.log(newUser)
+        res.redirect('/listado');
     } catch (err) {
         res.status(500).send('Error al registrar usuario');
     }
@@ -51,8 +76,6 @@ router.post('/login', async (req, res) => {
 
 router.get('/logout', (req, res) => {
     return res.clearCookie('userData').redirect('/login')
-  
-
 });
 
 export default router;

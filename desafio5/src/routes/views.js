@@ -9,7 +9,10 @@ router.get('/',  (req, res) => {
 });
 
 router.get('/login',  (req, res) => {
-    res.render('users/login',{title: 'Ecommerce'});
+    const usuarioSesion = req.session.user
+    console.log(usuarioSesion)
+   // res.render('users/login',{title: 'Ecommerce', layout: false, usuarioSesion});
+   res.render('users/login',{title: 'Ecommerce'});
 });
 
 router.get('/register',  (req, res) => {
@@ -21,9 +24,17 @@ router.get('/profile', isAuthenticated, (req, res) => {
 });
 
 router.get('/listado', isAuthenticated, isAdmin, async (req, res) => {
+    const usuarioSesion = req.session.user
+    console.log(usuarioSesion)
     const user = await userModel.find().lean().exec()
+    res.render('users/listado', {users: user, usuarioSesion});
+});
+
+router.get('/editar/:id', isAuthenticated, isAdmin, async (req, res) => {
+    
+    const user = await userModel.findOne({ _id: req.params.id }).lean().exec()
     console.log(user)
-    res.render('users/listado', {users: user});
+    res.render('users/editar', {user: user});
     
 });
 

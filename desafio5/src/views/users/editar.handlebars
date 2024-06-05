@@ -10,7 +10,7 @@
               {{ message}}
             </div>
             {{/if}}
-            <form id="productForm" action="/users/editar/{{user._id}}" method="POST">
+            <form id="productForm" action="/api/sessions/edit/{{user._id}}" method="POST">
               <div class="mb-3">
                     <label for="name" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{user.name}}">
@@ -25,8 +25,13 @@
               </div>
               <div class="mb-3">
                     <label class="form-label" for="password">Password:</label>
-                    <input class="form-control" type="password" id="password" name="password" value="{{user.password}}"><br><br>
+                    <input class="form-control" type="password" id="password" name="password" value="{{user.password}}">
               </div>
+              <div class="mb-3">
+                    <label class="form-label" for="age">Edad:</label>
+                    <input class="form-control" type="text" id="age" name="age" value="{{user.age}}"><br><br>
+              </div>
+
               <button type="submit" class="btn btn-primary">Editar Usuario</button>
             </form>
           </div>
