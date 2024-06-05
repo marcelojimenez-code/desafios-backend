@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
       const users = await userModel.find();
-      res.json(users);
+      res.status(200).json(users);
   } catch (error) {
       res.status(500).json({ error: 'Error al obtener usuarios' });
   }
@@ -19,7 +19,7 @@ router.get('/:id', async (req, res) => {
   try {
       const user = await userModel.findById(req.params.id).lean().exec();
       if (user) {
-          res.json(user);
+          res.status(200).json(user);
       } else {
           res.status(404).json({ message: 'Usuario no encontrado' });
       }
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
       await userModel.findByIdAndUpdate(req.params.id, req.body);
-      res.json({ message: 'Usuario actualizado correctamente' });
+      res.status(200).json({ message: 'Usuario actualizado correctamente' });
   } catch (error) {
       res.status(400).json({ error: 'Error al actualizar usuario' });
   }
@@ -62,7 +62,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
       await userModel.findByIdAndDelete(req.params.id);
-      res.json({ message: 'Usuario eliminado correctamente' });
+      res.status(200).json({ message: 'Usuario eliminado correctamente' });
   } catch (error) {
       res.status(400).json({ error: 'Error al eliminar usuario' });
   }
