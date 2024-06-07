@@ -1,0 +1,44 @@
+    
+  <br><br>  
+    <div class="container mt-9">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card">
+          <div class="card-header">Listado de Usuarios</div>
+          <div class="card-body">
+                <a href="/register" class="btn btn-primary mb-3">Crear Usuario</a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Edad</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each users}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.lastname}}</td>
+                            <td>{{this.email}}</td>
+                            <td>{{this.password}}</td>
+                            <td>{{this.age}}</td>
+                            <td>{{this.role}}</td>
+                            <td>
+                                <a href="/editar/{{this._id}}" class="btn btn-primary btn-sm">Editar</a>
+                                <a href="/api/sessions/eliminar/{{this._id}}" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  <br><br>

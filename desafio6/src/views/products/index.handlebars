@@ -1,0 +1,112 @@
+<style>    
+    .product-image {
+        width: 150px;
+        height: 200px;
+    }
+    
+    .card-text{
+        font-size: 13px;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.3/dist/sweetalert2.min.js"></script>
+<br>
+
+<div class="container">
+<div class="row">
+    {{#each data.docs}}
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <b>{{this.title}}</b>
+            </div>
+            
+            <div class="card-body">
+                <div align="center"><img src="{{this.thumbnails}}" class="card-img-top product-image" alt="{{this.title}}"></div>
+                <br>
+                
+            </div>
+
+            <div class="card-footer">
+                <p class="card-text text-muted"><strong>Id:</strong>{{this._id}}<br>
+                                                <strong>Categoria:</strong>{{this.description}}<br>
+                                                <strong>Precio:</strong> ${{this.price}}<br>
+                                                <strong>Stock:</strong> {{this.stock}}</p>
+                <div align="center">
+                {{#if this.stock}}
+                <button type="button" class="btn btn-success add-to-cart" data-product-id="{{this._id}}">Agregar al carrito</button>
+                {{else}}
+                <p class="card-text"><strong style="color:red"> Sin Stock</strong></p>
+                {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+        <div align="center"><nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item {{#if data.hasPrevPage}}{{else}}disabled{{/if}}">
+                    <a class="page-link" href="/products?page={{data.prevPage}}">Anterior</a>
+                </li>
+                {{#each front_pagination}}
+                <li class="page-item {{#if this.active}}active{{/if}}">
+                    <a class="page-link" href="/products?page={{this.page}}">{{this.page}}</a>
+                </li>
+                {{/each}}
+                <li class="page-item {{#if data.hasNextPage}}{{else}}disabled{{/if}}">
+                    <a class="page-link" href="/products?page={{data.nextPage}}">Siguiente</a>
+                </li>
+            </ul>
+        </nav></div>
+<div id="moving"></div>
+</div>
+
+<script>
+    const userCart = "{{user.cart}}";
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const productId = button.getAttribute('data-product-id');
+            const quantity = 1;
+            const url = `/api/carts/${userCart}/product/${productId}`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ quantity })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Producto Agregado',
+                            text: 'El producto se ha agregado al carrito con éxito.',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un error al agregar el producto al carrito.',
+                            showConfirmButton: true
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error de red al agregar el producto al carrito:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de Red',
+                        text: 'Hubo un error de red al agregar el producto al carrito.',
+                        showConfirmButton: true
+                    });
+                });
+        });
+    });
+</script>
