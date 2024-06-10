@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import userModel from '../../models/user.model.js';
+import { createHash, isValidPassword } from '../../utils.js';
 
 const router = Router();
 
@@ -10,7 +11,15 @@ router.get('/', async (req, res) => {
 router.post('/register', async (req, res) => {
     const { name, lastname, email, password, age } = req.body;
     try {
-        const newUser = await userModel.create({ name, lastname, email, password, age });
+        
+        let user = {
+            name,
+            lastname,
+            email,
+            password: createHash(password),
+            age
+        }
+        const newUser = await userModel.create(user);
         res.redirect('/login');
     } catch (err) {
         res.status(500).send('Error al registrar usuario');
@@ -47,10 +56,11 @@ router.post('/login', async (req, res) => {
     const login = req.body;
     console.log(login.email, login.password)
     try {
-        const user = await userModel.findOne({ email: login.email , password: login.password }).exec();
+        const user = await userModel.findOne({ email: login.email , password: login.password },{email: 1, name:1, lastname:1, password:1}).exec();
         console.log(user)
 
-        if (!user) return res.status(404).send('Usuario no encontrado');
+        if (!user) return res.status(404).send({status: "error", error: 'Usuario no encontrado'});
+        if (!isValidPassword(user, password)) return res.status(403).send({status: "error", error: "Password incorrecto"})
             req.session.user = {
                 id: user._id,
                 name: user.name,
