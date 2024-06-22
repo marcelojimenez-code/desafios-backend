@@ -59,6 +59,7 @@ router.post('/login', async (req, res) => {
                 age: user.age,
                 role: user.role
             };
+            
             res.cookie('userData', { username: user.name, role: user.role, id: user._id }, { maxAge: 3600000 }); 
             console.log(req.session.user)
 

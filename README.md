@@ -14,5 +14,7 @@ Desafio 4 : Websockets + Handlebars
 Desafio 5 : Implementación de login 
 
 Desafio 6 : NO está listo ya que preferi corregir el desafio 5, se envia a modo de contenedor para poder modificarlo
+
+Desafio 7 : Pendiente
 ```
 
